@@ -44,7 +44,7 @@
 - Recommending playlists instead
 - will have to club playlist before hand
 
-### Artist tags based selection
+### Artist tags based selection (selected since we only have artist tags)
 
 - save tags user is interested in based on tags from artist of songs they listened to
 - select another artist based on the tag recomend thats artists song to them
