@@ -3,6 +3,8 @@
 ## Assumption
 - User fabricated data
 
+## Tables
+
 ## User
 
 - Search History

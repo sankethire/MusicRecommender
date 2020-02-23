@@ -1,1 +1,13 @@
-\copy (select distinct songs.artist, artists.tags_lastfm from songs, artists where songs.artist = artists.artist_lastfm and artists.tags_lastfm is not null) to 'atrist_tags_clean.csv' delimiter ',' csv header;
+create view clean_artist as 
+(select
+  distinct artists.artist_lastfm,
+  artists.country_lastfm,
+  artists.listeners_lastfm,
+  artists.scrobbles_lastfm
+from artists, clean_tags
+where
+  clean_tags.artist = artists.artist_lastfm);
+
+\copy (select * from clean_artist) to 'artist_clean.csv' delimiter ',' csv header;
+
+drop view clean_artist;
