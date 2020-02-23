@@ -1,0 +1,1 @@
+\copy (select distinct songs.artist, artists.tags_lastfm from songs, artists where songs.artist = artists.artist_lastfm and artists.tags_lastfm is not null) to 'atrist_tags_clean.csv' delimiter ',' csv header;
