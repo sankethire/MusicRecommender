@@ -1,13 +1,13 @@
 # Queries
 
-
 - Login 
     - register: add to users and add user details to user_details
-    - update user details
-    - <del> update password, email </del>
-    - login authentication from users table
-    - 
+	- update user details
+	- <del> update password, email </del>
+	- login authentication from users table
+- Playing song
+  - trigger to add artists tag to users interest
 - Search By category
-    - song name
-    - artist name
-    - single or multiple tags
+	- song name
+	- artist name
+	- single or multiple tags
