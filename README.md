@@ -1,11 +1,12 @@
 # MusicRecommender
 Music Recommendation System using postgres
 
-Datasets
+## Datasets
 
 - music artist popularity: https://www.kaggle.com/pieca111/music-artists-popularity
 - the-spotify-hit-predictor-dataset: https://www.kaggle.com/theoverman/the-spotify-hit-predictor-dataset
 
-References
+## References
 
 - Spotipy API: https://spotipy.readthedocs.io/en/2.9.0/#
+- MusicBrainz API: https://python-musicbrainzngs.readthedocs.io/en/v0.7.1/
