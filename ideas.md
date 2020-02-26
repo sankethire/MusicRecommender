@@ -54,6 +54,10 @@
 
 1. User login authentication
 2. Save / View playlists
-3. Search related
+3. Search related (e.g search by some attribute)
 4. recommendation system
 5. saving song history of user
+6. Access to user to -> update the song and artist database by adding new song -> keeping track of updations using triggers.
+7. Access to user to add a tag to song if he/she wants to (track by trigger).
+
+- In 6 and 7, user's updations (as a trigger log) will be visible to admin, so that admin can review updation and make a decision to either keep the updation as it is (delete that particular updation log)  or restore the updation into the database.
