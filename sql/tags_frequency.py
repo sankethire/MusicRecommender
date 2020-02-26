@@ -18,12 +18,14 @@ new_filename = "tags_freq.csv"
 
 # print(type(tags_frequency))
 
-tagfields = ['tags', 'frequency']
+tagfields = ['tag_id' ,'tags', 'frequency']
 with open(new_filename, 'w') as csvfile:
     csvwriter = csv.writer(csvfile)
     csvwriter.writerow(tagfields)
+    tagid = 1
     for r in tags_frequency:
-        csvwriter.writerow([r,tags_frequency[r]])
+        csvwriter.writerow([tagid,r,tags_frequency[r]])
+        tagid += 1
 
 
 
