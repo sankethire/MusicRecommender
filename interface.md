@@ -5,6 +5,7 @@
 3. Song marking/playing
    1. If playing is not possible then select song as interest
    2. Also provides add to playlist option
+   3. Display image for song track.
 4. Most Recent Songs Interface
    1. Last 50 songs marked or listened by user
 5. Recommendations

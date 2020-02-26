@@ -9,5 +9,5 @@
 7. user_interest_tags(userid, tag_id, clicks)
 	- clicks: number of times user was interested in a tag
 8. tags(tag_id, tag_name, freq)
-9. artist_tags( )
+9. artist_tags(artist_name, tag_name)
 10. user_recent_tracks(userid, track_uri, time_stamp)
