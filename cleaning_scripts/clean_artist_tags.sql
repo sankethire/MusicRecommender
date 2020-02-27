@@ -10,4 +10,4 @@ create view clean_tags as(
     and artists.ambiguous_artist != true
 );
 
-\copy (select * from clean_tags) to 'artist_tags_clean.csv' delimiter ',' csv header;
+\copy (select * from clean_tags) to './csv/clean/artist_tags_clean.csv' delimiter ',' csv header;

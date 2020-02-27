@@ -1,5 +1,5 @@
 1. Table types defining
-   1. Keys
+   1. <del> Keys </del>
    2. Index
    3. Triggers
       1. adding artist update tags
