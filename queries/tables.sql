@@ -60,7 +60,7 @@ create table user_details(
 );
 
 create table playlists(
-  playlist_id integer,
+  playlist_id serial,
   username text,
   playlist_name text,
   primary key (playlist_id),
