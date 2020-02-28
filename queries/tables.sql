@@ -1,10 +1,9 @@
 create table artists(
-  mbid varchar(37),
-  artist_name text unique,
+  artist_name text ,
   country text,
   listeners integer,
   scrobbles integer,
-  primary key (mbid)
+  primary key (artist_name)
 );
 
 create table songs(
@@ -28,7 +27,7 @@ create table songs(
   sections integer,
   hit_target integer,
   primary key (uri),
-  foreign key artist references artists(artist_name) on delete cascade on update cascade
+  foreign key (artist) references artists(artist_name) on delete cascade on update cascade
 );
 
 create table tags(
@@ -39,11 +38,11 @@ create table tags(
 );
 
 create table artist_tags(
-  mbid varchar(37),
+  artist_name text,
   tag_id integer,
-  primary key (mbid, tag_id), 
-  foreign key mbid references artists(mbid) on delete cascade on update cascade,
-  foreign key tag_id references tags(tag_id) on delete cascade on update cascade
+  primary key (artist_name, tag_id), 
+  foreign key (artist_name) references artists(artist_name) on delete cascade on update cascade,
+  foreign key (tag_id) references tags(tag_id) on delete cascade on update cascade
 );
 
 create table users(
@@ -82,8 +81,8 @@ create table user_interest_tags(
   tag_id integer,
   clicks integer,
   primary key (userid, tag_id),
-  foreign key userid references users(userid) on delete cascade on update cascade,
-  foreign key tag_id references tags(tag_id) on delete cascade on update cascade
+  foreign key (userid) references users(userid) on delete cascade on update cascade,
+  foreign key (tag_id) references tags(tag_id) on delete cascade on update cascade
 );
 
 create table user_recent_tracks(
@@ -91,6 +90,6 @@ create table user_recent_tracks(
   track_uri varchar(36),
   time_stamp timestamp,
   primary key (userid, track_uri),
-  foreign key userid references users(userid) on delete cascade on update cascade,
-  foreign key track_uri references songs(uri) on delete cascade on update cascade
+  foreign key (userid) references users(userid) on delete cascade on update cascade,
+  foreign key (track_uri) references songs(uri) on delete cascade on update cascade
 );

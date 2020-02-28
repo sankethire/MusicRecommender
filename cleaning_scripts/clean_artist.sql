@@ -1,7 +1,6 @@
 create view clean_artist as 
 (select
-  artists_raw.mbid,
-  artists_raw.artist_lastfm,
+  distinct artists_raw.artist_lastfm,
   artists_raw.country_lastfm,
   artists_raw.listeners_lastfm,
   artists_raw.scrobbles_lastfm
