@@ -2,7 +2,7 @@ create or replace function trigger_add_recent_track()
 	returns trigger as 
 	$body$
 		begin
-			if (select count(*) from user_recent_tracks where user_recent_tracks.username = new.username) >= 10 then
+			if (select count(*) from user_recent_tracks where user_recent_tracks.username = new.username) > 10 then
 				begin
 					delete from user_recent_tracks where new.username = user_recent_tracks.username and user_recent_tracks.time_stamp = (select min(time_stamp) from user_recent_tracks where new.username = user_recent_tracks.username);
 				end;
