@@ -61,7 +61,8 @@ create table user_details(
 
 create table playlists(
   playlist_id integer,
-  username text ,
+  username text,
+  playlist_name text,
   primary key (playlist_id),
   foreign key (username) references users(username) on delete cascade on update cascade
 );
