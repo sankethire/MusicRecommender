@@ -45,26 +45,25 @@ create table artist_tags(
 );
 
 create table users(
-  userid integer,
-  username text unique,
+  username text,
   email text unique,
   passwd text,
-  primary key (userid)
+  primary key (username)
 );
 
 create table user_details(
-  userid integer,
+  username text ,
   first_name varchar(32),
   last_name varchar(32),
-  primary key (userid),
-  foreign key (userid) references users(userid) on delete cascade on update cascade
+  primary key (username),
+  foreign key (username) references users(username) on delete cascade on update cascade
 );
 
 create table playlists(
   playlist_id integer,
-  userid integer,
+  username text ,
   primary key (playlist_id),
-  foreign key (userid) references users(userid) on delete cascade on update cascade
+  foreign key (username) references users(username) on delete cascade on update cascade
 );
 
 create table playlist_tracks(
@@ -76,19 +75,19 @@ create table playlist_tracks(
 );
 
 create table user_interest_tags(
-  userid integer,
+  username text,
   tag_name text,
   clicks integer,
-  primary key (userid, tag_name),
-  foreign key (userid) references users(userid) on delete cascade on update cascade,
+  primary key (username, tag_name),
+  foreign key (username) references users(username) on delete cascade on update cascade,
   foreign key (tag_name) references tags(tag_name) on delete cascade on update cascade
 );
 
 create table user_recent_tracks(
-  userid integer,
+  username text,
   track_uri varchar(36),
   time_stamp timestamp,
-  primary key (userid, track_uri),
-  foreign key (userid) references users(userid) on delete cascade on update cascade,
+  primary key (username, track_uri),
+  foreign key (username) references users(username) on delete cascade on update cascade,
   foreign key (track_uri) references songs(uri) on delete cascade on update cascade
 );
