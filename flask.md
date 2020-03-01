@@ -22,3 +22,26 @@
    3. post
    4. put
    5. delete
+5. Global request objects
+   1. Form
+   2. args
+   3. Cookies - save client data on user side
+      1. `resp = make_response(render_template('.html')`
+      2. `resp.set_cookie('string', value)`
+      3. `value = request.cookie.get('string')`
+   4. files
+   5. Method
+6. Redirect
+   1. location
+   2. statuscode
+      1. `flask.abort(code)`
+   3. response
+7. Extensions
+   1. like SQLAlchemy
+
+### Jinja
+
+1. Delimiters
+   1. {%%} statement
+      1. if endif
+      2. for endfor
