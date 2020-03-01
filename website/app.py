@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect
+from flask import Flask, render_template, redirect, request
 import psycopg2
 
 # Connect to the database
@@ -10,17 +10,27 @@ app = Flask(__name__, template_folder='template')
 
 
 @app.route("/")
-def root():
-    cur.execute(
-    """
-        SELECT * FROM playlist_tracks
-        ORDER BY random()
-        LIMIT 3
-    """)
-    rows = cur.fetchall()
-    print(rows)
-    return render_template("base.html", rows=rows)
+def login():
+	
+	return render_template("login.html")
 
+@app.route('/', methods=['POST'])
+def authenticate():
+	username = request.form['username']
+	password = request.form['password']
+
+	cur.execute(
+	"""
+		select passwd from users where username = %s
+	""", (username,))
+
+	pwd = cur.fetchall()
+	print(pwd[0][0], password)
+	if (pwd[0][0] == password):
+		return pwd[0][0]
+	else:
+		return redirect("/")
 
 if __name__ == "__main__":
-    app.run(host="localhost", port=5001, debug=True)
+	app.run(host="localhost", port=5001, debug=True)
+	
