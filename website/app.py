@@ -1,5 +1,6 @@
-from flask import Flask, render_template, redirect, request
+from flask import Flask, render_template, redirect, request, flash, session, abort
 import psycopg2
+import os
 
 # Connect to the database
 db = 'host=10.17.50.126 dbname=group_18 user=group_18 password=604-287-987'
@@ -8,11 +9,10 @@ cur = conn.cursor()
 
 app = Flask(__name__, template_folder='template')
 
-
 @app.route("/")
-def login():
-	
-	return render_template("login.html")
+def home():
+	if not session.get('logged_in'):
+		return render_template("login.html")
 
 @app.route('/', methods=['POST'])
 def authenticate():
@@ -25,12 +25,15 @@ def authenticate():
 	""", (username,))
 
 	pwd = cur.fetchall()
-	print(pwd[0][0], password)
+
 	if (pwd[0][0] == password):
-		return pwd[0][0]
+		session['logged_in'] = True
+		session['username'] = username
 	else:
-		return redirect("/")
+		flash('Invalid username or password')
+		return home()
 
 if __name__ == "__main__":
+	app.secret_key = os.urandom(12)
 	app.run(host="localhost", port=5001, debug=True)
 	
