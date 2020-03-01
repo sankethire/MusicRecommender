@@ -12,3 +12,12 @@
    1. <del> artist_clean </del>
 7. Fake user data
 8. Queries
+
+## Flask
+
+
+
+### Last Least probable
+
+1. Close server and stop leaks
+2. SQL injection psycopg2 parameter
