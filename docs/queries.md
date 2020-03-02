@@ -11,3 +11,11 @@
 	- song name
 	- artist name
 	- single or multiple tags
+
+## Recommender
+
+1. get user interest tags
+2. Artist get artist with same tags
+3. Recommend song with similar track properties
+4. Randomize
+5. remove already listened songs

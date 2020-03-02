@@ -52,7 +52,7 @@ create table users(
 );
 
 create table user_details(
-  username text ,
+  username text,
   first_name varchar(32),
   last_name varchar(32),
   primary key (username),
