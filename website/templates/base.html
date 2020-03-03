@@ -12,16 +12,30 @@
 		
 	</title>
   </head>
+
+<style>
+	.navbar.center .navbar-inner {
+		text-align: center;
+		}
+
+	.navbar.center .navbar-inner .nav {
+		display:inline-block;
+		float: none;
+		vertical-align: top;
+		}
+	
+</style>
+
   <body>
 
     <nav class="navbar navbar-expand-md navbar-dark bg-dark">
-		<a class="navbar-brand" href="#"><img class="mb-4" src="https://upload.wikimedia.org/wikipedia/commons/1/1b/Youtube_Music_logo.svg" alt="" width="72" height="72"></a>
-		<div class="navbar-brand" href="#">Music recommender</div>
+		<a class="navbar-brand" href="/home" style="padding-top: 1.5%;"><img class="mb-4" src="https://upload.wikimedia.org/wikipedia/commons/1/1b/Youtube_Music_logo.svg" alt="" width="60" height="60"></a>
+		<div class="navbar-brand .navbar.center .navbar-inner"><a class="nav-link" href="/home"><font size="">Music recommender</font></a></div>
 		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 		  <span class="navbar-toggler-icon"></span>
 		</button>
 	  
-		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+		<div class="collapse navbar-collapse .navbar.center .navbar-inner" id="navbarSupportedContent">
 		  <ul class="navbar-nav mr-auto">
 			<!-- <li class="nav-item active">
 			  <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
