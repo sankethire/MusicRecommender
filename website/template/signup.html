@@ -82,10 +82,25 @@
       <label for="inputPassword" class="sr-only">Password</label>
 	  <input type="password" id="inputPassword" class="form-control" placeholder="Password" name="password" required>
 	  
+	  {% with messages = get_flashed_messages() %}
+	  {% if messages %}
+		  <div class=flashes class="checkbox mb-3">
+		  {% for message in messages %}
+		  <label>
+			  <font color="red">{{ message }}</font>
+		  </label>
+		  {% endfor %}
+		  </div>
+	  {% endif %}
+	  {% endwith %}
+	  {% block body %}{% endblock %}
+
 	  <button class="btn btn-lg btn-primary btn-block" type="submit">Sign Up</button>
+	  
 	</br>	
 	  <div class="text-center"><font color="white"><b>Already have an account? </b></font> <a href="login.html"> <b><font color="green">Login here</font></b> </a></div>
-    </form>
+	</form>
+	
 </body>
 
 

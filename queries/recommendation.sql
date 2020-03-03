@@ -66,23 +66,46 @@ where arts_desc.artist_name = songs.artist;
 -- recent songs based tag or otherwise
 
 select
-  artist_tags.tag_name
+  *
 from (
     select
-      songs.artist
+      *
     from (
         select
-          track_uri
-        from user_recent_tracks
-        where
-          username = 'yash98'
-      ) as rt,
-      songs
-    where
-      songs.uri = rt.track_uri
-  ) as arts,
-  artist_tags
+          arts.artist_name,
+          count(arts.artist_name)
+        from (
+            select
+              artist_name
+            from (
+            select
+              artist_tags.tag_name
+            from (
+                select
+                  songs.artist
+                from (
+                    select
+                      track_uri
+                    from user_recent_tracks
+                    where
+                      username = 'yash98'
+                  ) as rt,
+                  songs
+                where
+                  songs.uri = rt.track_uri
+              ) as arts1,
+              artist_tags
+            where
+              artist_tags.artist_name = arts.artist
+          ) as arts
+        group by
+          arts.artist_name
+      ) as arts_count
+    order by
+      count desc
+  ) as arts_desc,
+  songs
 where
-  artist_tags.artist_name = arts.artist
+  arts_desc.artist_name = songs.artist;
 
 -- New songs
