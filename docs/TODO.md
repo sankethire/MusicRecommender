@@ -21,3 +21,14 @@
 
 1. Close server and stop leaks
 2. SQL injection psycopg2 parameter
+
+## Last day
+
+1. Polish music recommendation
+   1. option to disable image loading
+2. User profile
+   1. user interest tags with clicks
+   2. update
+3. Playlist tracks
+   1. image priview
+4. Add remove song from playlist
