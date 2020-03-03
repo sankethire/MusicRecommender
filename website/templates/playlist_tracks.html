@@ -1,41 +1,33 @@
 
-
 {% extends "base.html" %}
 {% block content %}
 
-
-<body>
+	{% if playlist_name %}
+		<div class=flashes class="container">
+		<center>
+			<h1>
+				<font color="red">{{ playlist_name }}</font>
+			</h1>            
+		</center>
+		
+		</div>
+	{% endif %}
 	
-        {% if playlist_name %}
-          <div class=flashes class="container">
-			<center>
-				<h1>
-					<font color="red">{{ playlist_name }}</font>
-				</h1>            
-			</center>
-			
-          </div>
-        {% endif %}
-	  {% block body %}{% endblock %}
-	  
-	  <div class="container">
-		<table class="table table-bordered table-responsive">
-			{% for track in playlist_tracks %}
-			<tr>
-				<td>
-					<a href={{ track[0] }}>
-						  {{ track[1] }}
-					</a>
-				</td>
-				<td>
-					{{ track[2] }}
-				</td>
-			</tr>
-			{% endfor %}
-		</table>
-	  </div>
-	  
+	<div class="container">
+	<table class="table table-bordered table-responsive">
+		{% for track in playlist_tracks %}
+		<tr>
+			<td>
+				<a href={{ track[0] }}>
+						{{ track[1] }}
+				</a>
+			</td>
+			<td>
+				{{ track[2] }}
+			</td>
+		</tr>
+		{% endfor %}
+	</table>
+	</div>
 
-</body>
-
-</html>
+{% endblock %}

@@ -1,10 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
 
-
-
-<body>
-	
 	<h1>Playlists</h1>
         {% if playlists %}
         <div class="container table-responsive">
@@ -20,12 +16,5 @@
 			
 			</table>
           </div>
-        {% endif %}
-      {% block body %}{% endblock %}
-
-
-
-	  
-</body>
-
-</html>
+		{% endif %}
+{% endblock %}

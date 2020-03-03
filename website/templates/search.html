@@ -49,11 +49,11 @@
 			</center>
 		</font></h1>
 
-		<label for="inputUsername" class="sr-only">Song Name</label>
-		<input class="form-control" placeholder="Song" name="song_name" required autofocus>
+		<label class="sr-only">Song Name</label>
+		<input class="form-control" placeholder="Song" name="song_name" autofocus>
 
-		<label for="inputPassword" class="sr-only">Artist Name</label>
-		<input class="form-control" placeholder="Artist" name="artist_name" required>
+		<label class="sr-only">Artist Name</label>
+		<input class="form-control" placeholder="Artist" name="artist_name">
 		
 		{% with messages = get_flashed_messages() %}
 		{% if messages %}
@@ -70,6 +70,17 @@
 
 		</br>
 		<button class="btn btn-lg btn-primary btn-block" type="submit">Search</button>
+
+		<table>
+			{% if rows %}
+				{% for row in rows %}
+					<tr>
+						<td><a href="/songs/{{row[2]}}"> {{ row[0] }} </a></td>
+						<td> {{ row[1] }} </td>
+					</tr>
+				{% endfor %}
+			{% endif %}
+		</table>
 
 	</form>
 
