@@ -7,7 +7,7 @@ db = 'host=localhost dbname=project user=postgres password=postgres'
 conn = psycopg2.connect(db)
 cur = conn.cursor()
 
-app = Flask(__name__, template_folder='template')
+app = Flask(__name__)
 
 @app.route('/')
 def root():
