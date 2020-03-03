@@ -23,7 +23,7 @@ def check_loggedin():
 
 @app.route('/')
 def root():
-	check_loggedin()
+	return check_loggedin()
 
 @app.route('/home')
 def home():
@@ -180,7 +180,8 @@ def search():
 
 @app.route('/search', methods=['POST'])
 def search_query():
-	pass
+	song_name = request.form['song_name']
+	artist_name = request.form['song_name']
 
 def tuples_to_html(tuples):
 	htable=''
