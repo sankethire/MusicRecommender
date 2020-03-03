@@ -1,5 +1,13 @@
+
 {% extends "base.html" %}
 {% block content %}
-<img src={{ image_url }} alt="">			
-<p style="text-align: center; padding-top: 50%; font-size: medium;"> {{ song_name }} - {{ artist_name }} </p>
+
+
+<div class="container" style="padding-top: 4rem;">
+	<center><img class="img_center" src={{ image_url }} alt=""></center>
+	</br>
+	<center><h5> {{ song_name }} - {{ artist_name }} </h5></center>
+
+</div>
+
 {% endblock %}
