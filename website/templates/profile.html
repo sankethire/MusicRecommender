@@ -3,33 +3,43 @@
 
 	<div class="container" style="padding-top: 4rem;">
 		
-		<table class="table table-bordered table-responsive">
+		<table class="table table-bordered">
 				<tr>
-					{% if userdetail %}
-					<div class=flashes class="container">
-								Name: {{ userdetail[1] }} {{ userdetail[2] }}
-				
-					</div>
-					{% endif %}		
+					<td>Name</td>
+					<td>
+						{% if userdetail %}
+						<div class=flashes class="container">
+									 {{ userdetail[1] }} {{ userdetail[2] }}
+					
+						</div>
+						{% endif %}		
+
+					</td>
 				</tr>
 					
 				<tr>
-					{% if userdetail %}
-					<div class=flashes class="container">
-								Username: {{ userdetail[0] }}
-				
-					</div>
-					{% endif %}
+					<td>Username</td>
+					<td>
+						{% if userdetail %}
+						<div class=flashes class="container">
+									 {{ userdetail[0] }}
+					
+						</div>
+						{% endif %}
+					</td>					
 				</tr>
 
 				<tr>
-					{% if userdetail %}
-					<div class=flashes class="container">
-								Email ID: {{ userdetail[3] }}
-				
-					</div>
-				  
-					{% endif %}
+					<td>Email ID</td>
+					<td>
+						{% if userdetail %}
+						<div class=flashes class="container">
+									 {{ userdetail[3] }}
+					
+						</div>
+					
+						{% endif %}
+					</td>					
 				</tr>
 				
 		</table>

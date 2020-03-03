@@ -2,11 +2,12 @@
 {% extends "base.html" %}
 {% block content %}
 
+<div class="container" style="padding-top: 2rem;">
 	{% if playlist_name %}
 		<div class=flashes class="container">
 		<center>
 			<h1>
-				<font color="red">{{ playlist_name }}</font>
+				<font color="black">{{ playlist_name }}</font>
 			</h1>            
 		</center>
 		
@@ -29,5 +30,7 @@
 		{% endfor %}
 	</table>
 	</div>
+</div>
+	
 
 {% endblock %}

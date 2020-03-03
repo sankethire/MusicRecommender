@@ -1,7 +1,11 @@
+
 {% extends "base.html" %}
 {% block content %}
 
-	<h1>Playlists</h1>
+<div class="container" style="padding-top: 2rem;">
+	<center>
+		<h1>Playlists</h1>
+	</center>
         {% if playlists %}
         <div class="container table-responsive">
 			<table class="table table-bordered">
@@ -9,7 +13,7 @@
 				{% for playlist in playlists %}    
 				<tr>
 					<td>
-						<a href= {{ playlist[0] }}> {{ playlist[1] }} </a>
+						<a style="text-align: center;" href= {{ playlist[0] }}> {{ playlist[1] }} </a>
 					</td>
 				</tr>    								
 				{% endfor %}
@@ -17,4 +21,6 @@
 			</table>
           </div>
 		{% endif %}
+</div>
+	
 {% endblock %}
