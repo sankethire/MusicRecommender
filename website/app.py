@@ -103,14 +103,37 @@ def logout():
 	session.clear()
 	return redirect('login')
 
-def get_query_tuples(query):
-	cur.execute(query)
-	header = [i[0] for i in cur.description]
-	rows = [list(i) for i in cur.fetchall()]
-	# print("------------------------------")
-	# print(len(rows))
-	rows.insert(0,header)
-	return rows
+@app.route('/playlist')
+def playlist():
+	query = cur.execute(
+	"""
+		select playlist_id, playlist_name from playlists where username = %s;
+	""", (session.get('username'),))
+
+	rows = cur.fetchall()
+
+	playlists = []
+	for playlist in rows:
+		playlists.append("/playlist/" + str(playlist[0]), playlist[1])
+
+	return render_template('table.html', playlists=playlists)
+
+@app.route('/playlist/<playlist_id>')
+def select_playlist(playlist_id):
+	query1 = cur.execute(
+	"""
+		select * from playlist_tracks where playlist_id = %s;
+	""", (playlist_id,))
+
+	rows = cur.fetchall()
+
+	if len(rows) == 0 or rows[0][1] != session.get('username'):
+		pass
+
+	query = cur.execute(
+	"""
+		select 
+	""")
 
 def tuples_to_html(tuples):
 	htable=''
@@ -125,9 +148,13 @@ def tuples_to_html(tuples):
 	htable += '</table>'
 	return htable
 
-def query_to_html(query):
-	return tuples_to_html(get_query_tuples(query))
-
+def query_to_html(query=None, rows=[], to_execute=False):
+	if to_execute:
+		cur.execute(query)
+	header = [i[0] for i in cur.description]
+	rows = [list(i) for i in cur.fetchall()]
+	rows.insert(0,header)
+	return tuples_to_html(rows)
 
 @app.route('/table.html')
 def a():
@@ -135,11 +162,7 @@ def a():
 	# with open('table.html', 'w') as filetowrite:
 	# 	filetowrite.write(query_to_html(query))
 	# return render_template('table.html')
-	return render_template('table.html', table=query_to_html(query))
-
-@app.route('/home.html')
-def b():
-	return render_template('home.html')
+	return render_template('table.html', table=query_to_html(query, to_execute=True))
 
 if __name__ == "__main__":
 	app.secret_key = os.urandom(12)
