@@ -25,12 +25,16 @@ def authenticate():
 	""", (username,))
 
 	pwd = cur.fetchall()
+	print(len(pwd))
 
-	if (pwd[0][0] == password):
+	if (len(pwd) == 0):
+		flash('Invalid username')
+		return home()
+	elif (pwd[0][0] == password):
 		session['logged_in'] = True
 		session['username'] = username
 	else:
-		flash('Invalid username or password')
+		flash('Invalid password')
 		return home()
 
 @app.route('/signup.html')
