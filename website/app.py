@@ -46,12 +46,14 @@ def get_query_tuples(query):
 	cur.execute(query)
 	header = [i[0] for i in cur.description]
 	rows = [list(i) for i in cur.fetchall()]
+	# print("------------------------------")
+	# print(len(rows))
 	rows.insert(0,header)
 	return rows
 
 def tuples_to_html(tuples):
-	htable='<table border="1" bordercolor=000000 cellspacing="0" cellpadding="1" style="table-layout:fixed;vertical-align:bottom;font-size:13px;font-family:verdana,sans,sans-serif;border-collapse:collapse;border:1px solid rgb(130,130,130)" >'
-	tuples[0] = ['<b>' + i + '</b>' for i in tuples[0]] 
+	htable=''
+	tuples[0] = ['<b>' + i.upper() + '</b>' for i in tuples[0]] 
 	for row in tuples:
 		new_row = '<tr>' 
 		new_row += '<td align="left" style="padding:1px 4px">'+ str(row[0])+'</td>'
@@ -68,11 +70,15 @@ def query_to_html(query):
 
 @app.route('/table.html')
 def a():
-	query = """select * from songs where artist = 'AC/DC'"""
+	query = """select track from songs where artist = 'AC/DC'"""
 	# with open('table.html', 'w') as filetowrite:
 	# 	filetowrite.write(query_to_html(query))
 	# return render_template('table.html')
-	return query_to_html(query)
+	return render_template('table.html', table=query_to_html(query))
+
+@app.route('/home.html')
+def b():
+	return render_template('home.html')
 
 if __name__ == "__main__":
 	app.secret_key = os.urandom(12)
