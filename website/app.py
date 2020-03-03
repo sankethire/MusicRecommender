@@ -9,14 +9,28 @@ cur = conn.cursor()
 
 app = Flask(__name__, template_folder='template')
 
-@app.route("/")
+@app.route('/')
+def root():
+	if not session.get('logged_in'):
+		return redirect('/login')
+	else:
+		return redirect('/home')
+
+@app.route('/home')
 def home():
 	if not session.get('logged_in'):
-		return render_template("login.html")
+		return redirect('/login')
 	else:
-		return "Yo " + session['username']
+		return render_template('home.html')
 
-@app.route('/', methods=['POST'])
+@app.route('/login')
+def login():
+	if not session.get('logged_in'):
+		return render_template('login.html')
+	else:
+		return redirect('/home')
+
+@app.route('/login', methods=['POST'])
 def authenticate():
 	username = request.form['username']
 	password = request.form['password']
@@ -30,14 +44,14 @@ def authenticate():
 
 	if (len(pwd) == 0):
 		flash('Invalid username or password')
-		return home()
+		return redirect('/home')
 	elif (pwd[0][0] == password):
 		session['logged_in'] = True
 		session['username'] = username
-		return home()
+		return redirect('/home')
 	else:
 		flash('Invalid username or password')
-		return home()
+		return redirect('/home')
 
 @app.route('/signup')
 def signup():
@@ -82,13 +96,12 @@ def createuser():
 		insert into user_details values(%s, %s, %s);
 	""", (username, firstname, lastname))
 
-	return home()
+	return redirect('/home')
 
-
-@app.route('/login.html')
-def login():
-	return render_template('login.html')
-
+@app.route('/logout')
+def logout():
+	session.clear()
+	return redirect('login')
 
 def get_query_tuples(query):
 	cur.execute(query)
