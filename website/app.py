@@ -201,6 +201,8 @@ def search_query():
 	query = cur.execute(query_str)
 	rows = cur.fetchall()
 
+	if len(rows) == 0:
+		flash('No results found')
 
 	return render_template('search.html', rows=rows)
 
