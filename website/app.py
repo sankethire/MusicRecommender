@@ -143,9 +143,9 @@ def select_playlist(playlist_id):
 	playlist_tracks = []
 
 	for track in rows1:
-		playlist_tracks.append(("/song/"+track[0], track[1], track[2]))
+		playlist_tracks.append(("/songs/"+track[0], track[1], track[2]))
 
-	return render_template('playist_tracks.html', playlist_name=rows[0][1], playlist_tracks=playlist_tracks)
+	return render_template('playlist_tracks.html', playlist_name=rows[0][1], playlist_tracks=playlist_tracks)
 
 def tuples_to_html(tuples):
 	htable=''

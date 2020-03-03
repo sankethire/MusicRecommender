@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>
+
+	</title>
+</head>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+<body>
+	
+        {% if playlist_name %}
+          <div class=flashes class="container">
+			<center>
+				<h1>
+					<font color="red">{{ playlist_name }}</font>
+				</h1>            
+			</center>
+			
+          </div>
+        {% endif %}
+	  {% block body %}{% endblock %}
+	  
+	  <div class="container">
+		<table class="table table-bordered table-responsive">
+			{% for track in playlist_tracks %}
+			<tr>
+				<td>
+					<a href={{ track[0] }}>
+						  {{ track[1] }}
+					</a>
+				</td>
+				<td>
+					{{ track[2] }}
+				</td>
+			</tr>
+			{% endfor %}
+		</table>
+	  </div>
+	  
+
+</body>
+
+</html>
