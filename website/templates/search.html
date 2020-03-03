@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block content %}
+
+	<form class="form-signin" method="POST">
+		<h1 class="h3 mb-3 font-weight-normal"><font color="black">Search</font></h1>
+
+		<label for="inputUsername" class="sr-only">Song Name</label>
+		<input class="form-control" placeholder="Song" name="song_name" required autofocus>
+
+		<label for="inputPassword" class="sr-only">Artist Name</label>
+		<input class="form-control" placeholder="Artist" name="artist_name" required>
+		
+		{% with messages = get_flashed_messages() %}
+		{% if messages %}
+			<div class=flashes class="checkbox mb-3">
+			{% for message in messages %}
+			<label>
+				<font color="red">{{ message }}</font>
+			</label>
+			{% endfor %}
+			</div>
+		{% endif %}
+		{% endwith %}
+		{% block body %}{% endblock %}
+
+		<button class="btn btn-lg btn-primary btn-block" type="submit">Search</button>
+
+	</form>
+
+{% endblock %}

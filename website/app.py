@@ -15,12 +15,15 @@ cur = conn.cursor()
 
 app = Flask(__name__)
 
-@app.route('/')
-def root():
+def check_loggedin():
 	if not session.get('logged_in'):
 		return redirect('/login')
 	else:
 		return redirect('/home')
+
+@app.route('/')
+def root():
+	check_loggedin()
 
 @app.route('/home')
 def home():
@@ -167,13 +170,13 @@ def songs(track_uri):
 
 	# pprint(track)
 
-	image_url = track['album']['images'][0]['url']
+	image_url = track['album']['images'][1]['url']
 
 	return render_template('songs.html', song_name=song_name, artist_name=artist_name, image_url=image_url)
 
 @app.route('/search')
 def search():
-	render_template("search.html")
+	return render_template("search.html")
 
 @app.route('/search', methods=['POST'])
 def search_query():
