@@ -114,9 +114,11 @@ def playlist():
 
 	playlists = []
 	for playlist in rows:
-		playlists.append("/playlist/" + str(playlist[0]), playlist[1])
-
-	return render_template('table.html', playlists=playlists)
+		playlists.append(("/playlist/" + str(playlist[0]), playlist[1]))
+	print(session.get('username'))
+	print(rows)
+	print(playlists)
+	return render_template('playlists.html', playlists=playlists)
 
 @app.route('/playlist/<playlist_id>')
 def select_playlist(playlist_id):
