@@ -2,6 +2,12 @@ from flask import Flask, render_template, redirect, request, flash, session, abo
 import psycopg2
 import os
 
+import spotipy
+from spotipy.oauth2 import SpotifyClientCredentials
+sp = spotipy.Spotify(client_credentials_manager=SpotifyClientCredentials())
+
+from pprint import pprint
+
 # Connect to the database
 db = 'host=localhost dbname=project user=postgres password=postgres'
 conn = psycopg2.connect(db)
@@ -115,9 +121,6 @@ def playlist():
 	playlists = []
 	for playlist in rows:
 		playlists.append(("/playlist/" + str(playlist[0]), playlist[1]))
-	print(session.get('username'))
-	print(rows)
-	print(playlists)
 	return render_template('playlists.html', playlists=playlists)
 
 @app.route('/playlist/<playlist_id>')
@@ -156,7 +159,17 @@ def songs(track_uri):
 
 	rows = cur.fetchall()
 
-	return render_template('songs.html', song_name=rows[0][0], artist_name=rows[0][1])
+	song_name = rows[0][0]
+	artist_name = rows[0][1]
+	uri = rows[0][2]
+
+	track = sp.track(uri)
+
+	# pprint(track)
+
+	image_url = track['album']['images'][0]['url']
+
+	return render_template('songs.html', song_name=song_name, artist_name=artist_name, image_url=image_url)
 
 @app.route('/search')
 def search():

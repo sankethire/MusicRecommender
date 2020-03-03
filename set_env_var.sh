@@ -1,2 +1,5 @@
-export PG_PROJECT=project
-export PG_USER=yxzh
+export PG_PROJECT=
+export PG_USER=
+
+export SPOTIPY_CLIENT_ID=
+export SPOTIPY_CLIENT_SECRET=
