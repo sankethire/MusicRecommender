@@ -249,7 +249,7 @@ def profile():
     """, (session.get('username'),))
     userdetail = cur.fetchall()
 
-    print(userdetail)
+    # print(userdetail)
     return render_template('profile.html',userdetail=userdetail[0])
 
 if __name__ == "__main__":
