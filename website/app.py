@@ -156,9 +156,15 @@ def songs(track_uri):
 
 	rows = cur.fetchall()
 
-	print(rows)
-
 	return render_template('songs.html', song_name=rows[0][0], artist_name=rows[0][1])
+
+@app.route('/search')
+def search():
+	render_template("search.html")
+
+@app.route('/search', methods=['POST'])
+def search_query():
+	pass
 
 def tuples_to_html(tuples):
 	htable=''
