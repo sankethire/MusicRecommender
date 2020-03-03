@@ -29,8 +29,56 @@ def root():
 def home():
 	if not session.get('logged_in'):
 		return redirect('/login')
-	else:
-		return render_template('home.html')
+	
+	query = cur.execute(
+	'''
+	select 
+		track, artist, uri
+	from songs,
+		(select
+			*
+		from (
+			select
+			arts.artist_name,
+			sum(arts.clicks)
+			from (
+				select
+				artist_name, in_tr.tag_name, clicks
+				from (
+					select
+					tag_name, clicks
+					from user_interest_tags
+					where
+					username = 'yash98'
+				) as in_tr,
+				artist_tags
+				where
+				artist_tags.tag_name = in_tr.tag_name
+			) as arts
+			group by
+			arts.artist_name) as arts_sum
+		order by
+		sum desc
+		limit 20) as arts_desc
+	where arts_desc.artist_name = songs.artist 
+	order by random();''')
+
+	rows=cur.fetchall()
+
+	track_info = []
+
+	for row in rows[:20]:
+		song_name = row[0]
+		artist_name = row[1]
+		uri = row[2]
+
+		track = sp.track(uri)
+		# pprint(track)
+		image_url = track['album']['images'][2]['url']
+
+		track_info.append((image_url, '/songs/'+uri, song_name, artist_name))
+
+	return render_template('home.html', track_info=track_info)
 
 @app.route('/login')
 def login():
@@ -167,9 +215,7 @@ def songs(track_uri):
 	uri = rows[0][2]
 
 	track = sp.track(uri)
-
 	# pprint(track)
-
 	image_url = track['album']['images'][1]['url']
 
 	return render_template('songs.html', song_name=song_name, artist_name=artist_name, image_url=image_url)
