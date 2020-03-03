@@ -120,20 +120,30 @@ def playlist():
 
 @app.route('/playlist/<playlist_id>')
 def select_playlist(playlist_id):
-	query1 = cur.execute(
+	query = cur.execute(
 	"""
-		select * from playlist_tracks where playlist_id = %s;
+		select username, playlist_name from playlists where playlist_id = %s;
 	""", (playlist_id,))
 
 	rows = cur.fetchall()
 
-	if len(rows) == 0 or rows[0][1] != session.get('username'):
-		pass
+	if rows[0][0] != session.get('username'):
+		# TODO: alert message here
+		redirect('/home')
 
-	query = cur.execute(
+	query1 = cur.execute(
 	"""
-		select 
-	""")
+		select track_uri, track, artist from playlist_tracks, songs where playlist_id = %s and track_uri = uri;
+	""", (playlist_id,))
+
+	rows1 = cur.fetchall()
+
+	playlist_tracks = []
+
+	for track in rows1:
+		playlist_tracks.append(("/song/"+track[0], track[1], track[2]))
+
+	return render_template('playist_tracks.html', playlist_name=rows[0][1], playlist_tracks=playlist_tracks)
 
 def tuples_to_html(tuples):
 	htable=''
