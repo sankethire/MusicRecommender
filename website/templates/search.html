@@ -55,32 +55,46 @@
 		<label class="sr-only">Artist Name</label>
 		<input class="form-control" placeholder="Artist" name="artist_name">
 		
-		{% with messages = get_flashed_messages() %}
-		{% if messages %}
-			<div class=flashes class="checkbox mb-3">
-			{% for message in messages %}
-			<label>
-				<font color="red">{{ message }}</font>
-			</label>
-			{% endfor %}
-			</div>
-		{% endif %}
-		{% endwith %}
-		{% block body %}{% endblock %}
-
+		
 		</br>
 		<button class="btn btn-lg btn-primary btn-block" type="submit">Search</button>
-
-		<table>
-			{% if rows %}
-				{% for row in rows %}
-					<tr>
-						<td><a href="/songs/{{row[2]}}"> {{ row[0] }} </a></td>
-						<td> {{ row[1] }} </td>
-					</tr>
+		
+		<center>
+			{% with messages = get_flashed_messages() %}
+			{% if messages %}
+			
+				<div class=flashes class="checkbox mb-3" style="padding-top: 1rem;">
+				{% for message in messages %}
+				<label>
+					<center>
+						<font color="grey">{{ message }}</font>
+					</center>
+				</label>
 				{% endfor %}
+				</div>
 			{% endif %}
-		</table>
+			{% endwith %}
+			{% block body %}{% endblock %}
+		</center>
+
+		
+		{% if rows %}
+		<div class="container" style="padding-top: 4rem;">
+			<table class="table table-bordered">
+				<tr>
+					<th>Song</th>
+					<th>Artist</th>
+				</tr>
+					{% for row in rows %}
+						<tr>
+							<td><a href="/songs/{{row[2]}}"> {{ row[0] }} </a></td>
+							<td> {{ row[1] }} </td>
+						</tr>
+					{% endfor %}
+				</table>
+			{% endif %}
+		</div>
+		
 
 	</form>
 
