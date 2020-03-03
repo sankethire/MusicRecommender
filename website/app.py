@@ -147,6 +147,19 @@ def select_playlist(playlist_id):
 
 	return render_template('playlist_tracks.html', playlist_name=rows[0][1], playlist_tracks=playlist_tracks)
 
+@app.route('/songs/<track_uri>')
+def songs(track_uri):
+	query = cur.execute(
+	"""
+		select * from songs where uri = %s;
+	""", (track_uri,))
+
+	rows = cur.fetchall()
+
+	print(rows)
+
+	return render_template('songs.html', song_name=rows[0][0], artist_name=rows[0][1])
+
 def tuples_to_html(tuples):
 	htable=''
 	tuples[0] = ['<b>' + i.upper() + '</b>' for i in tuples[0]] 
