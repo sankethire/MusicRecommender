@@ -189,6 +189,11 @@ def a():
 	# return render_template('table.html')
 	return render_template('table.html', table=query_to_html(query, to_execute=True))
 
+
+@app.route('/navbar.html')
+def navbar():
+	return render_template('navbar.html')
+
 if __name__ == "__main__":
 	app.secret_key = os.urandom(12)
 	app.run(host="localhost", port=5001, debug=True)
