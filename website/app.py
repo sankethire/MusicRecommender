@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, request, flash, session, abort
+from flask import Flask, render_template, redirect, request, flash, session, abort, url_for
 import psycopg2
 import os
 
@@ -32,6 +32,14 @@ def authenticate():
 	else:
 		flash('Invalid username or password')
 		return home()
+
+@app.route('/signup.html')
+def signup():
+    return render_template('signup.html')
+
+@app.route('/login.html')
+def login():
+	return render_template('login.html')
 
 if __name__ == "__main__":
 	app.secret_key = os.urandom(12)
