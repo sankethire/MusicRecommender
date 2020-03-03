@@ -182,7 +182,6 @@ def search():
 def search_query():
 	song_name = request.form['song_name']
 	artist_name = request.form['artist_name']
-	print(artist_name, song_name)
 
 	query_str = "select * from songs "
 	if song_name == '' and artist_name == '':
@@ -200,7 +199,6 @@ def search_query():
 		query_str += 'artist ~* \'%s\' ' % artist_name
 	query_str += ';'
 
-	print(query_str)
 	query = cur.execute(query_str)
 	rows = cur.fetchall()
 
