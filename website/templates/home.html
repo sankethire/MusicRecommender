@@ -1,1 +1,16 @@
 {% extends "base.html" %}
+{% block content %}
+	{% if track_info %}
+	<div class="container" style="padding-top: 2rem;">
+		<table class="table table-bordered">
+				{% for t in track_info %}
+					<tr>
+						<td><img src={{t[0]}}></a></td>
+						<td><a href={{t[1]}}> {{t[2]}} </a></td>
+						<td>{{t[3]}}</td>
+					</tr>
+				{% endfor %}
+			</table>
+		{% endif %}
+	</div>
+{% endblock %}
