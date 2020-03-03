@@ -186,9 +186,8 @@ def search_query():
 	query_str = "select * from songs "
 	if song_name == '' and artist_name == '':
 		return redirect('/search')
-	else:
-		query_str += 'where '
 	if song_name != '':
+		query_str += 'where '
 		query_str += 'track ~* \'%s\' ' % song_name
 	if artist_name != '':
 		if 'where ' in query_str:
