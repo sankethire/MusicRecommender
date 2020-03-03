@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block content %}
+
+	<div class="container" style="padding-top: 4rem;">
+		
+		<table class="table table-bordered table-responsive">
+				<tr>
+					{% if userdetail %}
+					<div class=flashes class="container">
+								Name: {{ userdetail[1] }} {{ userdetail[2] }}
+				
+					</div>
+					{% endif %}		
+				</tr>
+					
+				<tr>
+					{% if userdetail %}
+					<div class=flashes class="container">
+								Username: {{ userdetail[0] }}
+				
+					</div>
+					{% endif %}
+				</tr>
+
+				<tr>
+					{% if userdetail %}
+					<div class=flashes class="container">
+								Email ID: {{ userdetail[3] }}
+				
+					</div>
+				  
+					{% endif %}
+				</tr>
+				
+		</table>
+				
+    </div>
+
+{% endblock %}

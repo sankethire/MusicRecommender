@@ -238,6 +238,18 @@ def a():
 def navbar():
 	return render_template('navbar.html')
 
+
+@app.route('/profile')
+def profile():
+    query = cur.execute(
+    """
+        select users.username,first_name,last_name, email, passwd from users, user_details where users.username = user_details.username and users.username = %s;
+    """, (session.get('username'),))
+    userdetail = cur.fetchall()
+
+    print(userdetail)
+    return render_template('profile.html',userdetail=userdetail[0])
+
 if __name__ == "__main__":
 	app.secret_key = os.urandom(12)
 	app.run(host="localhost", port=5001, debug=True)
