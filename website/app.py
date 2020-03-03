@@ -3,7 +3,7 @@ import psycopg2
 import os
 
 # Connect to the database
-db = 'host=10.17.50.126 dbname=group_18 user=group_18 password=604-287-987'
+db = 'host=localhost dbname=project user=postgres password=postgres'
 conn = psycopg2.connect(db)
 cur = conn.cursor()
 
@@ -13,6 +13,8 @@ app = Flask(__name__, template_folder='template')
 def home():
 	if not session.get('logged_in'):
 		return render_template("login.html")
+	else:
+		return "Yo " + session['username']
 
 @app.route('/', methods=['POST'])
 def authenticate():
@@ -21,21 +23,67 @@ def authenticate():
 
 	cur.execute(
 	"""
-		select passwd from users where username = %s
+		select passwd from users where username = %s;
 	""", (username,))
 
 	pwd = cur.fetchall()
 
-	if (pwd[0][0] == password):
+	if (len(pwd) == 0):
+		flash('Invalid username or password')
+		return home()
+	elif (pwd[0][0] == password):
 		session['logged_in'] = True
 		session['username'] = username
+		return home()
 	else:
 		flash('Invalid username or password')
 		return home()
 
-@app.route('/signup.html')
+@app.route('/signup')
 def signup():
-    return render_template('signup.html')
+	return render_template('signup.html')
+
+@app.route('/signup', methods=['POST'])
+def createuser():
+	
+	username = request.form['username']
+	password = request.form['password']
+	firstname = request.form['firstname']
+	lastname = request.form['lastname']
+	email = request.form['email']
+
+	try:
+		query = cur.execute(
+		"""
+			insert into users values(%s, %s, %s);
+		""", (username, email, password))
+	except psycopg2.errors.UniqueViolation as uniq_voil:
+		query1 = cur.execute(
+		"""
+			rollback;
+		""")
+
+		for arg in uniq_voil.args:
+			if "users_pkey" in arg:
+				flash('Username already exists')
+				flash('Pick a different username')
+
+			if "users_email_key" in arg:
+				flash('Email already exists')
+		return signup()
+	else:
+		query2 = cur.execute(
+		"""
+			commit;
+		""")
+
+	query = cur.execute(
+	"""
+		insert into user_details values(%s, %s, %s);
+	""", (username, firstname, lastname))
+
+	return home()
+
 
 @app.route('/login.html')
 def login():
