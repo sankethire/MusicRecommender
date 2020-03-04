@@ -170,8 +170,14 @@ def playlist():
 	rows = cur.fetchall()
 
 	playlists = []
-	for playlist in rows:
-		playlists.append(("/playlist/" + str(playlist[0]), playlist[1]))
+	if len(rows) == 0:
+		flash('Playlist is empty')
+	else:
+		for playlist in rows:
+			playlists.append(("/playlist/" + str(playlist[0]), playlist[1]))
+	
+	print(len(rows))
+
 	return render_template('playlists.html', playlists=playlists)
 
 @app.route('/add_playlist')
@@ -182,27 +188,36 @@ def add_playlist():
 def add_playlist_to_table():
 	playlist_name = request.form['playlist_name']
 
-	try:
-		query = cur.execute(
-		'''
-			insert into playlists (username, playlist_name) values(%s, %s);
-		''', (session.get('username'), playlist_name))
-	except Exception as e:
-		query1 = cur.execute(
-		'''
-			rollback;
-		''', (session.get('username'), playlist_name))
+	# try:
+	# 	query = cur.execute(
+	# 	'''
+	# 		insert into playlists (username, playlist_name) values(%s, %s);
+	# 	''', (session.get('username'), playlist_name))
+	# except Exception as e:
+	# 	query1 = cur.execute(
+	# 	'''
+	# 		rollback;
+	# 	''', (session.get('username'), playlist_name))
 		
-		print(e)
-		flash('Playlist with name \'%s\' already exists' % (playlist_name,))
-		flash('Please choose another playlist name')
+	# 	print(e)
+	# 	flash('Playlist with name \'%s\' already exists' % (playlist_name,))
+	# 	flash('Please choose another playlist name')
 
-		return render_template('add_playlist.html')
-	else:
-		query2 = cur.execute(
-		'''
-			commit;
-		''', (session.get('username'), playlist_name))
+	# 	return render_template('add_playlist.html')
+	# else:
+	# 	query2 = cur.execute(
+	# 	'''
+	# 		commit;
+	# 	''', (session.get('username'), playlist_name))
+	
+	query = cur.execute(
+'''
+	insert into playlists (username, playlist_name) values(%s, %s);
+''', (session.get('username'), playlist_name))
+	query2 = cur.execute(
+'''
+	commit;
+''', (session.get('username'), playlist_name))
 
 	return redirect('/playlist')
 
