@@ -342,7 +342,7 @@ def interest():
 	return render_template('user_interests.html', interests=interests)
 
 @app.route('/recent_tracks')
-def interest():
+def recent_tracks():
 	query = cur.execute(
 	'''
 		select track, time_stamp from user_recent_tracks, songs where username = %s and uri = track_uri order by time_stamp desc;
@@ -350,7 +350,7 @@ def interest():
 
 	track_times = cur.fetchall()
 
-	return render_template('user_interests.html', track_times=track_times)
+	return render_template('recent_tracks.html', track_times=track_times)
 
 if __name__ == "__main__":
 	app.secret_key = os.urandom(12)

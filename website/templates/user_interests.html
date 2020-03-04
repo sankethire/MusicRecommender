@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+
+
+<h1>User Interests</h1>
+
+<div class="container">
+	<table class="table table-bordered table-responsive">
+		{% for interest in interests %}
+		<tr>
+			<td>
+				{{ interest[0] }}
+			</td>
+			<td>
+				{{ interest[1] }}
+			</td>
+		</tr>
+		{% endfor %}
+	</table>
+</div>
+
+{% endblock %}

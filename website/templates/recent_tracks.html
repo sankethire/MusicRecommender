@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+
+
+<h1>Recent Tracks</h1>
+
+<div class="container">
+	<table class="table table-bordered">
+		{% for track_time in track_times %}
+		<tr>
+			<td>
+				{{ track_time[0] }}
+			</td>
+			<td>
+				{{ track_time[1] }}
+			</td>
+		</tr>
+		{% endfor %}
+	</table>
+</div>
+
+{% endblock %}
