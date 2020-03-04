@@ -16,14 +16,14 @@
 	
 	{% if playlist_tracks %}
 	<div class="container">
-	<table class="table table-bordered table-responsive">
+	<table class="table table-bordered">
 		{% for track in playlist_tracks %}
 		<tr>
 			{% if music_art %}
 			<td><img src={{track[4]}}></a></td>
 			{% endif %}
 			<td>
-				<a href={{track[0]}}>
+				<a href=/songs/{{track[0]}}>
 						{{track[1]}}
 				</a>
 			</td>
