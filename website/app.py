@@ -77,7 +77,7 @@ def home():
 		# pprint(track)
 		image_url = track['album']['images'][2]['url']
 
-		track_info.append((image_url, '/songs/'+uri, song_name, artist_name))
+		track_info.append((image_url, uri, song_name, artist_name))
 
 	return render_template('home.html', track_info=track_info, username=session.get('username'))
 
@@ -291,10 +291,24 @@ def play_song(track_uri):
 	if not session.get('logged_in'):
 		return redirect('/login')
 
-	query = cur.execute(
-	'''
+	print('hi')
+	try:
+		query = cur.execute(
+		'''
+			insert into user_recent_tracks values(%s, %s, now());
+		''')
+	except Exception as e:
+		query1 = cur.execute('''
+		rollback;
+		''')
 
-	''')
+		print(e)
+	else:
+		query2 = cur.execute('''
+		commit;
+		''')
+
+	return ""
 
 @app.route('/search')
 def search():
