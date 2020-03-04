@@ -15,10 +15,10 @@
 		{% for track_time in track_times %}
 		<tr>
 			<td>
-				{{ track_time[0] }}
+				<a href='/songs/{{ track_time[0] }}''> {{ track_time[1] }} </a>				
 			</td>
 			<td>
-				{{ track_time[1] }}
+				{{ track_time[2] }}
 			</td>
 		</tr>
 		{% endfor %}
