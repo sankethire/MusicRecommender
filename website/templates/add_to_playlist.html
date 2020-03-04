@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="container" style="padding-top: 2rem;">
+	<center>
+		<h1>Playlists</h1>
+	</center>
+
+</br>
+        {% if playlists %}
+        <div class="container ">
+			<table class="table table-bordered">
+			
+				{% for playlist in playlists %}    
+				<tr>
+					<td>
+						<a style="text-align: center;" href= {{ playlist[0] }}> {{ playlist[1] }} </a>
+					</td>
+				</tr>    								
+				{% endfor %}
+			
+			</table>
+          </div>
+		{% endif %}
+</div>
+
+<center>
+	{% with messages = get_flashed_messages() %}
+	{% if messages %}
+	
+		<div class=flashes class="checkbox mb-3" style="padding-top: 1rem;">
+		{% for message in messages %}
+		<label>
+			<center>
+				<font color="grey">{{ message }}</font>
+			</center>
+		</label>
+		{% endfor %}
+		</div>
+	{% endif %}
+	{% endwith %}
+	{% block body %}{% endblock %}
+</center>
+
+	
+{% endblock %}
