@@ -1,6 +1,18 @@
+<style>
+	.custom {
+		width: 200px !important;
+	}
+
+	.custom1 {
+			width: 300px !important;
+	}
+
+</style>
+
 {% extends 'base.html' %}
 {% block content %}
 
+<div class="container" style="padding-top: 2rem;">
 	<form class="form-signin" method="POST">
 		<h1 class="h3 mb-3 font-weight-normal">
 		<font color="black">
@@ -10,10 +22,14 @@
 		</font></h1>
 
 		<label class="sr-only">Playlist name</label>
-		<input class="form-control" placeholder="" name="playlist_name" autofocus required>
-
-		</br>
-		<button class="btn btn-lg btn-primary btn-block" type="submit">Create</button>
+		<center>
+			<input class="form-control custom1" placeholder="Playlist Name" name="playlist_name" autofocus required>
+		</center>
+	
+	</br>
+		<center>
+			<button class="btn btn-md btn-primary btn-block custom" type="submit">Create</button>
+		</center>
 		
 		<center>
 			{% with messages = get_flashed_messages() %}
@@ -32,7 +48,8 @@
 			{% endwith %}
 			{% block body %}{% endblock %}
 		</center>
-
 	</form>
+</div>
+
 
 {% endblock %}
