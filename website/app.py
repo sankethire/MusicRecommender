@@ -77,7 +77,8 @@ def home():
 		# pprint(track)
 		image_url = track['album']['images'][2]['url']
 
-		track_info.append((image_url, uri, song_name, artist_name))
+		id_hash = uri.split(":")[-1]
+		track_info.append((image_url, uri, song_name, artist_name, id_hash))
 
 	return render_template('home.html', track_info=track_info, username=session.get('username'))
 
@@ -106,6 +107,7 @@ def authenticate():
 	elif (pwd[0][0] == password):
 		session['logged_in'] = True
 		session['username'] = username
+		session['music_art'] = False
 		return redirect('/home')
 	else:
 		flash('Invalid username or password')
@@ -160,6 +162,14 @@ def createuser():
 def logout():
 	session.clear()
 	return redirect('login')
+
+@app.route('/toggle_music_art')
+def toggle_music_art():
+	if (session.get('music_art')):
+		session['music_art'] = False
+	else:
+		session['music_art'] = True
+	return ""
 
 @app.route('/playlist')
 def playlist():
@@ -291,12 +301,11 @@ def play_song(track_uri):
 	if not session.get('logged_in'):
 		return redirect('/login')
 
-	print('hi')
 	try:
 		query = cur.execute(
 		'''
 			insert into user_recent_tracks values(%s, %s, now());
-		''')
+		''', (session.get('username'), track_uri))
 	except Exception as e:
 		query1 = cur.execute('''
 		rollback;

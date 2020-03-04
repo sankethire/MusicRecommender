@@ -26,14 +26,18 @@
 						
 						<script type=text/javascript>
 							$(function() {
-							  $('a#{{t[1]}}').bind('click', function() {
-								$.get('/songs/{{t[1]}}/play');
+							  $('a#T{{t[4]}}').bind('click', function() {
+								$.getJSON('/songs/{{t[1]}}/play',
+									function(data) {
+								//do nothing
+								console.log("{{t[1]}}");
+								});
 								return false;
 							  });
 							});
 						</script>
 					
-						<td> <a href=# id={{t[1]}}><button class='btn btn-default'>Play</button></a> </td>
+						<td> <a href=# id=T{{t[4]}}><button class='btn btn-default'>Play</button></a> </td>
 					</tr>
 				{% endfor %}
 			</table>
