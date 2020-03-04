@@ -194,7 +194,7 @@ def playlist():
 		flash('You have no playlists')
 	else:
 		for playlist in rows:
-			playlists.append(("/playlist/" + str(playlist[0]), playlist[1]))
+			playlists.append((playlist[0], playlist[1]))
 	
 	print(len(rows))
 
