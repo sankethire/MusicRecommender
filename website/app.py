@@ -79,7 +79,7 @@ def home():
 
 		track_info.append((image_url, '/songs/'+uri, song_name, artist_name))
 
-	return render_template('home.html', track_info=track_info)
+	return render_template('home.html', track_info=track_info, username=session.get('username'))
 
 @app.route('/login')
 def login():
@@ -284,7 +284,17 @@ def songs(track_uri):
 	# pprint(track)
 	image_url = track['album']['images'][1]['url']
 
-	return render_template('songs.html', song_name=song_name, artist_name=artist_name, image_url=image_url)
+	return render_template('songs.html', song_name=song_name, artist_name=artist_name, image_url=image_url, uri=uri)
+
+@app.route('/songs/<track_uri>/play')
+def play_song(track_uri):
+	if not session.get('logged_in'):
+		return redirect('/login')
+
+	query = cur.execute(
+	'''
+
+	''')
 
 @app.route('/search')
 def search():
