@@ -542,7 +542,7 @@ def interest():
 
 	query = cur.execute(
 	'''
-		select tag_name, clicks from user_interest_tags where username = %s order by clicks;
+		select tag_name, clicks from user_interest_tags where username = %s order by clicks desc;
 	''', (session.get('username'),) )
 
 	interests = cur.fetchall()
@@ -556,7 +556,7 @@ def recent_tracks():
 
 	query = cur.execute(
 	'''
-		select track, time_stamp from user_recent_tracks, songs where username = %s and uri = track_uri order by time_stamp desc;
+		select track_uri, track, time_stamp from user_recent_tracks, songs where username = %s and uri = track_uri order by time_stamp desc;
 	''', (session.get('username'),) )
 
 	track_times = cur.fetchall()
