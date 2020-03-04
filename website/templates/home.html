@@ -1,5 +1,20 @@
+
 {% extends "base.html" %}
 {% block content %}
+
+	{% if username %}
+	<div class=flashes class="container" style="padding-top: 2rem;">
+		<center>
+			<h2>
+				Hi {{ username }},
+			</h2>
+			<h2>
+				Discover your Music Here!
+			</h2>
+		</center>
+	</div>
+	{% endif %}
+
 	{% if track_info %}
 	<div class="container" style="padding-top: 2rem;">
 		<table class="table table-bordered">
@@ -8,6 +23,20 @@
 						<td><img src={{t[0]}}></a></td>
 						<td><a href={{t[1]}}> {{t[2]}} </a></td>
 						<td>{{t[3]}}</td>
+						
+						<script type=text/javascript>
+							$(function() {
+							  $('a#test').bind('click', function() {
+								$.getJSON('/background_process_test',
+									function(data) {
+								  //do nothing
+								});
+								return false;
+							  });
+							});
+						</script>
+					
+						<td> <a href=# id=test><button class='btn btn-default'>Play</button></a> </td>
 					</tr>
 				{% endfor %}
 			</table>
