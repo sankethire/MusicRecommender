@@ -19,13 +19,34 @@
 
 </br>
         {% if playlists %}
-        <div class="container table-responsive">
+        <div class="container ">
 			<table class="table table-bordered">
 			
 				{% for playlist in playlists %}    
 				<tr>
 					<td>
 						<a style="text-align: center;" href= {{ playlist[0] }}> {{ playlist[1] }} </a>
+					</td>
+					<td>
+						<center>
+
+
+							<script type=text/javascript>
+								$(function() {
+								  $('a#DL{{ playlist[0] }}').bind('click', function() {
+									$.getJSON('/delete_playlist/{{ playlist[0] }}',
+										function(data) {
+									//do nothing
+									});
+									return false;
+								  });
+								});
+							</script>
+
+							<a href="#" id="DL{{ playlist[0] }}">
+								<button type="button" class="btn btn-danger">Delete Playlist</button>
+							</a>
+						</center>
 					</td>
 				</tr>    								
 				{% endfor %}
