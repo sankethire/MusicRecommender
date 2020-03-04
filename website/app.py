@@ -472,12 +472,19 @@ def search_query():
 		query_str += 'where '
 		query_str += 'track ~* \'%s\' ' % song_name
 	if artist_name != '':
-		if 'where ' in query_str:
+		if song_name != '':
 			query_str += 'and '
 		else:
 			query_str += 'where '
-
 		query_str += 'artist ~* \'%s\' ' % artist_name
+	if song_name != '':
+		query_str += 'order by track'
+	if artist_name != '':
+		if song_name != '':
+			query_str += 'order by artist'
+		else:
+			query_str += ', artist'
+
 	query_str += ';'
 
 	query = cur.execute(query_str)
