@@ -174,6 +174,38 @@ def playlist():
 		playlists.append(("/playlist/" + str(playlist[0]), playlist[1]))
 	return render_template('playlists.html', playlists=playlists)
 
+@app.route('/add_playlist')
+def add_playlist():
+	return render_template('add_playlist.html')
+
+@app.route('/add_playlist', methods=['POST'])
+def add_playlist_to_table():
+	playlist_name = request.form['playlist_name']
+
+	try:
+		query = cur.execute(
+		'''
+			insert into playlists (username, playlist_name) values(%s, %s);
+		''', (session.get('username'), playlist_name))
+	except Exception as e:
+		query1 = cur.execute(
+		'''
+			rollback;
+		''', (session.get('username'), playlist_name))
+		
+		print(e)
+		flash('Playlist with name \'%s\' already exists' % (playlist_name,))
+		flash('Please choose another playlist name')
+
+		return render_template('add_playlist.html')
+	else:
+		query2 = cur.execute(
+		'''
+			commit;
+		''', (session.get('username'), playlist_name))
+
+	return redirect('/playlist')
+
 @app.route('/playlist/<playlist_id>')
 def select_playlist(playlist_id):
 	query = cur.execute(
