@@ -286,7 +286,7 @@ def select_playlist(playlist_id):
 	if len(playlist_tracks) == 0:
 		flash('Playlist is empty')
 
-	return render_template('playlist_tracks.html', playlist_name=rows[0][1], playlist_tracks=playlist_tracks)
+	return render_template('playlist_tracks.html', playlist_name=rows[0][1], playlist_tracks=playlist_tracks, playlist_id=playlist_id)
 
 @app.route('/songs/<track_uri>')
 def songs(track_uri):
@@ -304,11 +304,12 @@ def songs(track_uri):
 	artist_name = rows[0][1]
 	uri = rows[0][2]
 
+	id_hash = uri.split(":")[-1]
 	track = sp.track(uri)
 	# pprint(track)
 	image_url = track['album']['images'][1]['url']
 
-	return render_template('songs.html', song_name=song_name, artist_name=artist_name, image_url=image_url, uri=uri)
+	return render_template('songs.html', song_name=song_name, artist_name=artist_name, image_url=image_url, uri=uri, id_hash=id_hash)
 
 @app.route('/songs/<track_uri>/play')
 def play_song(track_uri):
@@ -407,11 +408,12 @@ def delete_from_playlist(track_uri, playlist_id):
 		query = cur.execute('''
 		delete from playlist_tracks where playlist_id = %s and track_uri = %s;
 		''', (playlist_id, track_uri))
-	except psycopg2.errors.UniqueViolation as uniq_voil:
+	except Exception as e:
 		query1 = cur.execute('''
 		rollback;
 		''')
-		# TODO: display reason of error song already exists in playlist
+		print(e)
+		# TODO: display reason of error song either
 	else:
 		query2 = cur.execute('''
 		commit;
