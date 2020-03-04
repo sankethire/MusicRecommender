@@ -1,11 +1,17 @@
 {% extends "base.html" %}
 {% block content %}
 
+<div class="container" style="padding-top: 2rem;">
 
-<h1>Recent Tracks</h1>
-
-<div class="container">
+	<center>
+		<h1>Recent Tracks</h1>
+	</center>
+	{% if track_times %}
 	<table class="table table-bordered">
+		<tr>
+			<th>Songs</th>
+			<th> Timestamp</th>
+		</tr>
 		{% for track_time in track_times %}
 		<tr>
 			<td>
@@ -17,6 +23,8 @@
 		</tr>
 		{% endfor %}
 	</table>
+	{% endif %}
 </div>
+
 
 {% endblock %}
