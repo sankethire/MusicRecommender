@@ -19,14 +19,31 @@
 	<table class="table table-bordered table-responsive">
 		{% for track in playlist_tracks %}
 		<tr>
+			{% if music_art %}
+			<td><img src={{track[4]}}></a></td>
+			{% endif %}
 			<td>
-				<a href={{ track[0] }}>
-						{{ track[1] }}
+				<a href={{track[0]}}>
+						{{track[1]}}
 				</a>
 			</td>
 			<td>
 				{{ track[2] }}
 			</td>
+			<script type=text/javascript>
+				$(function() {
+					$('a#T{{track[3]}}').bind('click', function() {
+					$.getJSON('/songs/{{track[0]}}/play',
+						function(data) {
+					//do nothing
+					console.log("{{track[3]}}");
+					});
+					return false;
+					});
+				});
+			</script>
+		
+			<td> <a href=# id=T{{track[3]}}><button class='btn btn-default'>Play</button></a> </td>
 		</tr>
 		{% endfor %}
 	</table>

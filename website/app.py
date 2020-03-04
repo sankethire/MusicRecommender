@@ -272,9 +272,20 @@ def select_playlist(playlist_id):
 
 	playlist_tracks = []
 
+	music_art = session.get('music_art')
+
 	for track in rows1:
-		playlist_tracks.append(("/songs/"+track[0], track[1], track[2]))
-	
+		id_hash = track[0].split(":")[-1]
+
+		if music_art:
+			track_s = sp.track(track[0])
+			# pprint(track)
+			image_url = track_s['album']['images'][2]['url']
+
+			playlist_tracks.append((track[0], track[1], track[2], id_hash, image_url))
+		else:
+			playlist_tracks.append((track[0], track[1], track[2], id_hash))
+
 	if len(playlist_tracks) == 0:
 		flash('Playlist is empty')
 
