@@ -34,10 +34,16 @@
 		<div class="navbar-brand .navbar.center .navbar-inner">
 			<a class="nav-link" href="/home"><font size="">Music recommender</font></a>			
 		</div>
-		
-		<div class="navbar-brand .navbar.center .navbar-inner">
-			<button type="button" class="btn btn-default">Show Album Art</button>
-		</div>
+		{% set music_art = session.get('music_art') %}
+		{% if music_art %}
+			<div class="navbar-brand .navbar.center .navbar-inner">
+				<button type="button" class="btn btn-default" onclick="window.location.href = '/toggle_music_art';">Music Art: Shown</button>
+			</div>
+		{% else %}
+			<div class="navbar-brand .navbar.center .navbar-inner">
+				<button type="button" class="btn btn-success">Music Art: Hidden</button>
+			</div>
+		{% endif %}
 		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 		  <span class="navbar-toggler-icon"></span>
 		</button>
