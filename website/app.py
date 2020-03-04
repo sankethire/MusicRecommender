@@ -298,6 +298,19 @@ def profile():
     # print(userdetail)
     return render_template('profile.html',userdetail=userdetail[0])
 
+@app.route('/profile/interests')
+def interest():
+	query = cur.execute(
+	'''
+		select tag_name, clicks from user_interest_tags where username = %s;
+	''', (session.get('username'),) )
+
+	interests = cur.fetchall()
+
+	return render_template('user_interests.html', interests=interests)
+
+
+
 if __name__ == "__main__":
 	app.secret_key = os.urandom(12)
 	app.run(host="localhost", port=5001, debug=True)
