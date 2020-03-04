@@ -1,3 +1,8 @@
+<style>
+	.custom {
+    width: 200px !important;
+}
+</style>
 
 {% extends "base.html" %}
 {% block content %}
@@ -6,6 +11,11 @@
 	<center>
 		<h1>Playlists</h1>
 	</center>
+	<center>
+		<button class="btn btn-md btn-primary btn-block custom" type="submit" href="/add_playlists">Create New Playlist</button>
+	</center>
+
+</br>
         {% if playlists %}
         <div class="container table-responsive">
 			<table class="table table-bordered">
