@@ -69,7 +69,6 @@ def home():
 	track_info = []
 
 	music_art = session.get('music_art')
-	print(music_art)
 
 	for row in rows[:20]:
 		song_name = row[0]
@@ -196,8 +195,6 @@ def playlist():
 		for playlist in rows:
 			playlists.append((playlist[0], playlist[1]))
 	
-	print(len(rows))
-
 	return render_template('playlists.html', playlists=playlists)
 
 @app.route('/add_playlist')
@@ -335,6 +332,28 @@ def play_song(track_uri):
 		''')
 
 	return ""
+
+@app.route('/songs/<track_uri>/add_to_playlist')
+def adding_playlist(track_uri):
+	if not session.get('logged_in'):
+		return redirect('/login')
+
+	query = cur.execute(
+	"""
+		select playlist_id, playlist_name from playlists where username = %s;
+	""", (session.get('username'),))
+
+	rows = cur.fetchall()
+
+	playlists = []
+	if len(rows) == 0:
+		flash('You have no playlists')
+	else:
+		for playlist in rows:
+			playlists.append((playlist[0], playlist[1]))
+	
+	return render_template('add_to_playlist.html', playlists=playlists)
+
 
 @app.route('/songs/<track_uri>/add_to_playlist/<playlist_id>')
 def add_to_playlist(track_uri, playlist_id):
