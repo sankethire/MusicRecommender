@@ -27,6 +27,7 @@ def root():
 
 @app.route('/home')
 def home():
+
 	if not session.get('logged_in'):
 		return redirect('/login')
 	
@@ -162,6 +163,9 @@ def logout():
 
 @app.route('/playlist')
 def playlist():
+	if not session.get('logged_in'):
+		return redirect('/login')
+
 	query = cur.execute(
 	"""
 		select playlist_id, playlist_name from playlists where username = %s;
@@ -182,10 +186,16 @@ def playlist():
 
 @app.route('/add_playlist')
 def add_playlist():
+	if not session.get('logged_in'):
+		return redirect('/login')
+
 	return render_template('add_playlist.html')
 
 @app.route('/add_playlist', methods=['POST'])
 def add_playlist_to_table():
+	if not session.get('logged_in'):
+		return redirect('/login')
+
 	playlist_name = request.form['playlist_name']
 
 	# try:
@@ -223,6 +233,9 @@ def add_playlist_to_table():
 
 @app.route('/playlist/<playlist_id>')
 def select_playlist(playlist_id):
+	if not session.get('logged_in'):
+		return redirect('/login')
+
 	query = cur.execute(
 	"""
 		select username, playlist_name from playlists where playlist_id = %s;
@@ -253,6 +266,9 @@ def select_playlist(playlist_id):
 
 @app.route('/songs/<track_uri>')
 def songs(track_uri):
+	if not session.get('logged_in'):
+		return redirect('/login')
+
 	query = cur.execute(
 	"""
 		select * from songs where uri = %s;
@@ -272,10 +288,16 @@ def songs(track_uri):
 
 @app.route('/search')
 def search():
+	if not session.get('logged_in'):
+		return redirect('/login')
+
 	return render_template("search.html")
 
 @app.route('/search', methods=['POST'])
 def search_query():
+	if not session.get('logged_in'):
+		return redirect('/login')
+
 	song_name = request.form['song_name']
 	artist_name = request.form['artist_name']
 
@@ -339,20 +361,26 @@ def navbar():
 
 @app.route('/profile')
 def profile():
-    query = cur.execute(
-    """
-        select users.username,first_name,last_name, email, passwd from users, user_details where users.username = user_details.username and users.username = %s;
-    """, (session.get('username'),))
-    userdetail = cur.fetchall()
+	if not session.get('logged_in'):
+		return redirect('/login')
 
-    # print(userdetail)
-    return render_template('profile.html',userdetail=userdetail[0])
+	query = cur.execute(
+	"""
+		select users.username,first_name,last_name, email, passwd from users, user_details where users.username = user_details.username and users.username = %s;
+	""", (session.get('username'),))
+	userdetail = cur.fetchall()
+
+	# print(userdetail)
+	return render_template('profile.html',userdetail=userdetail[0])
 
 @app.route('/profile/interests')
 def interest():
+	if not session.get('logged_in'):
+		return redirect('/login')
+
 	query = cur.execute(
 	'''
-		select tag_name, clicks from user_interest_tags where username = %s;
+		select tag_name, clicks from user_interest_tags where username = %s order by clicks;
 	''', (session.get('username'),) )
 
 	interests = cur.fetchall()
@@ -361,6 +389,9 @@ def interest():
 
 @app.route('/recent_tracks')
 def recent_tracks():
+	if not session.get('logged_in'):
+		return redirect('/login')
+
 	query = cur.execute(
 	'''
 		select track, time_stamp from user_recent_tracks, songs where username = %s and uri = track_uri order by time_stamp desc;
