@@ -171,7 +171,7 @@ def playlist():
 
 	playlists = []
 	if len(rows) == 0:
-		flash('Playlist is empty')
+		flash('You have no playlists')
 	else:
 		for playlist in rows:
 			playlists.append(("/playlist/" + str(playlist[0]), playlist[1]))
@@ -245,6 +245,9 @@ def select_playlist(playlist_id):
 
 	for track in rows1:
 		playlist_tracks.append(("/songs/"+track[0], track[1], track[2]))
+	
+	if len(playlist_tracks) == 0:
+		flash('Playlist is empty')
 
 	return render_template('playlist_tracks.html', playlist_name=rows[0][1], playlist_tracks=playlist_tracks)
 

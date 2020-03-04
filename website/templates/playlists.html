@@ -34,5 +34,24 @@
           </div>
 		{% endif %}
 </div>
+
+<center>
+	{% with messages = get_flashed_messages() %}
+	{% if messages %}
+	
+		<div class=flashes class="checkbox mb-3" style="padding-top: 1rem;">
+		{% for message in messages %}
+		<label>
+			<center>
+				<font color="grey">{{ message }}</font>
+			</center>
+		</label>
+		{% endfor %}
+		</div>
+	{% endif %}
+	{% endwith %}
+	{% block body %}{% endblock %}
+</center>
+
 	
 {% endblock %}
