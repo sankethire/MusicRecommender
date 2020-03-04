@@ -68,17 +68,23 @@ def home():
 
 	track_info = []
 
+	music_art = session.get('music_art')
+	print(music_art)
+
 	for row in rows[:20]:
 		song_name = row[0]
 		artist_name = row[1]
 		uri = row[2]
-
-		track = sp.track(uri)
-		# pprint(track)
-		image_url = track['album']['images'][2]['url']
-
 		id_hash = uri.split(":")[-1]
-		track_info.append((image_url, uri, song_name, artist_name, id_hash))
+
+		if music_art:
+			track = sp.track(uri)
+			# pprint(track)
+			image_url = track['album']['images'][2]['url']
+
+			track_info.append((uri, song_name, artist_name, id_hash, image_url))
+		else:
+			track_info.append((uri, song_name, artist_name, id_hash))
 
 	return render_template('home.html', track_info=track_info, username=session.get('username'))
 
@@ -318,6 +324,99 @@ def play_song(track_uri):
 		''')
 
 	return ""
+
+@app.route('/songs/<track_uri>/add_to_playlist/<playlist_id>')
+def add_to_playlist(track_uri, playlist_id):
+	if not session.get('logged_in'):
+		return redirect('/login')
+
+	query = cur.execute(
+	"""
+		select username, playlist_name from playlists where playlist_id = %s;
+	""", (playlist_id,))
+
+	rows = cur.fetchall()
+
+	if rows[0][0] != session.get('username'):
+		# TODO: alert message here
+		redirect('/home')
+
+	try:
+		query = cur.execute('''
+		insert into playlist_tracks values(%s, %s);
+		''', (playlist_id, track_uri))
+	except psycopg2.errors.UniqueViolation as uniq_voil:
+		query1 = cur.execute('''
+		rollback;
+		''')
+		# TODO: display reason of error song already exists in playlist
+	else:
+		query2 = cur.execute('''
+		commit;
+		''')
+
+	return redirect('/playlist/'+str(playlist_id))
+
+@app.route('/songs/<track_uri>/delete_from_playlist/<playlist_id>')
+def delete_from_playlist(track_uri, playlist_id):
+	if not session.get('logged_in'):
+		return redirect('/login')
+
+	query = cur.execute(
+	"""
+		select username, playlist_name from playlists where playlist_id = %s;
+	""", (playlist_id,))
+
+	rows = cur.fetchall()
+
+	if rows[0][0] != session.get('username'):
+		# TODO: alert message here
+		redirect('/home')
+
+	try:
+		query = cur.execute('''
+		delete from playlist_tracks where playlist_id = %s and track_uri = %s;
+		''', (playlist_id, track_uri))
+	except psycopg2.errors.UniqueViolation as uniq_voil:
+		query1 = cur.execute('''
+		rollback;
+		''')
+		# TODO: display reason of error song already exists in playlist
+	else:
+		query2 = cur.execute('''
+		commit;
+		''')
+
+	return redirect('/playlist/'+str(playlist_id))
+
+
+@app.route('/delete_playlist/<playlist_id>')
+def delete_playlist(playlist_id):
+	if not session.get('logged_in'):
+		return redirect('/login')
+
+	query = cur.execute(
+	"""
+		select username, playlist_name from playlists where playlist_id = %s;
+	""", (playlist_id,))
+
+	rows = cur.fetchall()
+
+	try:
+		query = cur.execute('''
+		delete from playlists where playlist_id = %s;
+		''', (playlist_id,))
+	except Exception as e:
+		query1 = cur.execute('''
+		rollback;
+		''')
+		print(e)
+	else:
+		query2 = cur.execute('''
+		commit;
+		''')
+	
+	return redirect('/playlist')
 
 @app.route('/search')
 def search():

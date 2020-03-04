@@ -20,24 +20,26 @@
 		<table class="table table-bordered">
 				{% for t in track_info %}
 					<tr>
-						<td><img src={{t[0]}}></a></td>
-						<td><a href="/songs/{{t[1]}}"> {{t[2]}} </a></td>
-						<td>{{t[3]}}</td>
+						{% if music_art %}
+						<td><img src={{t[4]}}></a></td>
+						{% endif %}
+						<td><a href="/songs/{{t[0]}}"> {{t[1]}} </a></td>
+						<td>{{t[2]}}</td>
 						
 						<script type=text/javascript>
 							$(function() {
-							  $('a#T{{t[4]}}').bind('click', function() {
-								$.getJSON('/songs/{{t[1]}}/play',
+							  $('a#T{{t[3]}}').bind('click', function() {
+								$.getJSON('/songs/{{t[0]}}/play',
 									function(data) {
 								//do nothing
-								console.log("{{t[1]}}");
+								console.log("{{t[3]}}");
 								});
 								return false;
 							  });
 							});
 						</script>
 					
-						<td> <a href=# id=T{{t[4]}}><button class='btn btn-default'>Play</button></a> </td>
+						<td> <a href=# id=T{{t[3]}}><button class='btn btn-default'>Play</button></a> </td>
 					</tr>
 				{% endfor %}
 			</table>
